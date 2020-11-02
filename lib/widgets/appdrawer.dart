@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../screens/about.dart';
 import '../screens/graphs.dart';
 import '../screens/tables.dart';
+import '../screens/home.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -26,28 +27,28 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.home),
             title: Text('Home'),
             onTap: () {
-              Navigator.of(context).pushNamed('/');
+              Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
             },
           ),
           ListTile(
             leading: Icon(Icons.table_chart),
             title: Text('Table'),
             onTap: () {
-              Navigator.of(context).pushNamed(TablesScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(TablesScreen.routeName);
             },
           ),
           ListTile(
             leading: Icon(Icons.graphic_eq),
             title: Text('Graphs'),
             onTap: () {
-              Navigator.of(context).pushNamed(GraphsScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(GraphsScreen.routeName);
             },
           ),
           ListTile(
             leading: Icon(Icons.person),
             title: Text('About'),
             onTap: () {
-              Navigator.of(context).pushNamed(AboutScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(AboutScreen.routeName);
             },
           ),
 

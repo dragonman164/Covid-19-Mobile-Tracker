@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import '';
+import '../widgets/appdrawer.dart';
 
 class TablesScreen extends StatelessWidget {
   static String routeName = '/tables';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     drawer: AppDrawer(),
       appBar: AppBar(
         title: Text('Tables'),
         backgroundColor: Theme.of(context).primaryColor,
