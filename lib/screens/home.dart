@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../widgets/appdrawer.dart';
 import '../models/globalmodel.dart';
+import '../widgets/ListTile.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = '/home';
@@ -44,70 +45,127 @@ GlobalModel globalModel;
    );
  }
 
- Widget displayDetails(GlobalModel obj) {
-   return Column(
-     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-     children: [
-       ListTile(
-         leading: Image(image: AssetImage('assets/covid.jpg')),
-         title:   Text('Total Cases : ${obj.totalCases}',
-           style: TextStyle(
-             fontSize: 20,
-             fontWeight: FontWeight.bold,
-             color: Colors.orange,
-           ),),
+  Widget displayDetails(GlobalModel obj){
+   return Padding(
+     padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+     child: GridView.count(
+       crossAxisCount: 2,
+       crossAxisSpacing: 20,
+       mainAxisSpacing: 20,
+       children: [
+         Container(
+           decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(25),
+          gradient: LinearGradient(
+            colors: [Colors.red,Colors.orange],
+          ),
+             boxShadow: [BoxShadow(
+               color: Colors.black,
+               blurRadius: 12,
+             ),],
+           ),
+           child: Center(
+             child: Text('Total Cases : ${obj.totalCases}',style: TextStyle(
+               fontSize: 20,
+               fontWeight: FontWeight.bold,
+             ),textAlign: TextAlign.center,),
+           ),
+         ),
+         Container(
+           decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(25),
+             gradient: LinearGradient(
+               colors: [Colors.green,Colors.yellow],
+             ),
+             boxShadow: [BoxShadow(
+               color: Colors.black,
+               blurRadius: 12,
+             ),],
+           ),
+           child: Center(
+             child: Text('Total Deaths : ${obj.totalDeaths}',style: TextStyle(
+               fontSize: 20,
+               fontWeight: FontWeight.bold,
+             ),textAlign: TextAlign.center,),
+           ),
+         ),
+         Container(
+           decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(25),
+             gradient: LinearGradient(
+               colors: [Colors.pink,Colors.orange],
+             ),
+             boxShadow: [BoxShadow(
+               color: Colors.black,
+               blurRadius: 12,
+             ),],
+           ),
+           child: Center(
+             child: Text('Total Recovered : ${obj.totalRecovered}',style: TextStyle(
+               fontSize: 20,
+               fontWeight: FontWeight.bold,
+             ),textAlign: TextAlign.center,),
+           ),
+         ),
+         Container(
+           decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(25),
+             gradient: LinearGradient(
+               colors: [Colors.deepOrange,Colors.yellow],
+             ),
+             boxShadow: [BoxShadow(
+               color: Colors.black,
+               blurRadius: 12,
+             ),],
+           ),
+           child: Center(
+             child: Text('New Confirmed : ${obj.newConfirmed}',style: TextStyle(
+               fontSize: 20,
+               fontWeight: FontWeight.bold,
+             ),textAlign: TextAlign.center,),
+           ),
+         ),
+         Container(
+           decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(25),
+             gradient: LinearGradient(
+               colors: [Colors.red,Colors.greenAccent],
+             ),
+             boxShadow: [BoxShadow(
+               color: Colors.black,
+               blurRadius: 12,
+             ),],
+           ),
+           child: Center(
+             child: Text('New Deaths : ${obj.newDeaths}',style: TextStyle(
+               fontSize: 20,
+               fontWeight: FontWeight.bold,
+             ),textAlign: TextAlign.center,),
+           ),
+         ),
+         Container(
+           decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(25),
+             gradient: LinearGradient(
+               colors: [Colors.red,Colors.cyan],
+             ),
+             boxShadow: [BoxShadow(
+               color: Colors.black,
+               blurRadius: 12,
+             ),],
+           ),
+           child: Center(
+             child: Text('New Recovered : ${obj.newRecovered}',style: TextStyle(
+               fontSize: 20,
+               fontWeight: FontWeight.bold,
+             ),textAlign: TextAlign.center,),
+           ),
+         ),
 
-       ),
-       ListTile(
-         leading: Image(image: AssetImage('assets/danger.jpg'),),
-         title:  Text('Total Deaths : ${obj.totalDeaths}',
-           style: TextStyle(
-             fontSize: 20,
-             fontWeight: FontWeight.bold,
-             color: Colors.red,
-           ),),
-       ),
-       ListTile(
-         leading: Image(image: AssetImage('assets/plus.png'),),
-         title:   Text('Total Recovered : ${obj.totalRecovered}',
-           style: TextStyle(
-             fontSize: 20,
-             fontWeight: FontWeight.bold,
-             color: Colors.green,
-           ),),
-       ),
-       ListTile(
-         leading: Image(image: AssetImage('assets/covid.jpg'),),
-         title:  Text('New Confirmed : ${obj.newConfirmed}',
-           style: TextStyle(
-             fontSize: 20,
-             fontWeight: FontWeight.bold,
-             color: Colors.orange,
-           ),),
-       ),
-       ListTile(
-         leading: Image(image: AssetImage('assets/danger.jpg'),),
-         title:    Text('New Deaths : ${obj.newDeaths}',
-           style: TextStyle(
-             fontSize: 20,
-             fontWeight: FontWeight.bold,
-             color: Colors.red,
-           ),),
-       ),
-       ListTile(
-         leading: Image(image: AssetImage('assets/plus.png'),),
-         title:    Text('New Recovered : ${obj.newRecovered}',
-           style: TextStyle(
-             fontSize: 20,
-             fontWeight: FontWeight.bold,
-             color: Colors.green,
-           ),),
-       ),
-
-     ],
+       ],
+     ),
    );
- }
-
+  }
 
 
   @override

@@ -8,18 +8,23 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      elevation: 5,
       child: ListView(
         padding: EdgeInsets.zero,
         children:  <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
+              image: DecorationImage(
+                image: AssetImage('assets/covid.jpg'),
+                fit: BoxFit.cover,
+              ),
             ),
             child: Text(
               'Menu',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
