@@ -4,6 +4,7 @@ import 'dart:convert';
 import '../widgets/appdrawer.dart';
 import '../models/globalmodel.dart';
 import '../widgets/ListTile.dart';
+import '../models/countries.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = '/home';
@@ -53,120 +54,17 @@ GlobalModel globalModel;
        crossAxisSpacing: 20,
        mainAxisSpacing: 20,
        children: [
-         Container(
-           decoration: BoxDecoration(
-             borderRadius: BorderRadius.circular(25),
-          gradient: LinearGradient(
-            colors: [Colors.red,Colors.orange],
-          ),
-             boxShadow: [BoxShadow(
-               color: Colors.black,
-               blurRadius: 12,
-             ),],
-           ),
-           child: Center(
-             child: Text('Total Cases : ${obj.totalCases}',style: TextStyle(
-               fontSize: 20,
-               fontWeight: FontWeight.bold,
-             ),textAlign: TextAlign.center,),
-           ),
-         ),
-         Container(
-           decoration: BoxDecoration(
-             borderRadius: BorderRadius.circular(25),
-             gradient: LinearGradient(
-               colors: [Colors.green,Colors.yellow],
-             ),
-             boxShadow: [BoxShadow(
-               color: Colors.black,
-               blurRadius: 12,
-             ),],
-           ),
-           child: Center(
-             child: Text('Total Deaths : ${obj.totalDeaths}',style: TextStyle(
-               fontSize: 20,
-               fontWeight: FontWeight.bold,
-             ),textAlign: TextAlign.center,),
-           ),
-         ),
-         Container(
-           decoration: BoxDecoration(
-             borderRadius: BorderRadius.circular(25),
-             gradient: LinearGradient(
-               colors: [Colors.pink,Colors.orange],
-             ),
-             boxShadow: [BoxShadow(
-               color: Colors.black,
-               blurRadius: 12,
-             ),],
-           ),
-           child: Center(
-             child: Text('Total Recovered : ${obj.totalRecovered}',style: TextStyle(
-               fontSize: 20,
-               fontWeight: FontWeight.bold,
-             ),textAlign: TextAlign.center,),
-           ),
-         ),
-         Container(
-           decoration: BoxDecoration(
-             borderRadius: BorderRadius.circular(25),
-             gradient: LinearGradient(
-               colors: [Colors.deepOrange,Colors.yellow],
-             ),
-             boxShadow: [BoxShadow(
-               color: Colors.black,
-               blurRadius: 12,
-             ),],
-           ),
-           child: Center(
-             child: Text('New Confirmed : ${obj.newConfirmed}',style: TextStyle(
-               fontSize: 20,
-               fontWeight: FontWeight.bold,
-             ),textAlign: TextAlign.center,),
-           ),
-         ),
-         Container(
-           decoration: BoxDecoration(
-             borderRadius: BorderRadius.circular(25),
-             gradient: LinearGradient(
-               colors: [Colors.red,Colors.greenAccent],
-             ),
-             boxShadow: [BoxShadow(
-               color: Colors.black,
-               blurRadius: 12,
-             ),],
-           ),
-           child: Center(
-             child: Text('New Deaths : ${obj.newDeaths}',style: TextStyle(
-               fontSize: 20,
-               fontWeight: FontWeight.bold,
-             ),textAlign: TextAlign.center,),
-           ),
-         ),
-         Container(
-           decoration: BoxDecoration(
-             borderRadius: BorderRadius.circular(25),
-             gradient: LinearGradient(
-               colors: [Colors.red,Colors.cyan],
-             ),
-             boxShadow: [BoxShadow(
-               color: Colors.black,
-               blurRadius: 12,
-             ),],
-           ),
-           child: Center(
-             child: Text('New Recovered : ${obj.newRecovered}',style: TextStyle(
-               fontSize: 20,
-               fontWeight: FontWeight.bold,
-             ),textAlign: TextAlign.center,),
-           ),
-         ),
+       ListObject(text:'Total Cases : ${obj.totalCases}',colorList: [Colors.orange,Colors.red],),
+         ListObject(text: 'Total Deaths : ${obj.totalDeaths}',colorList: [Colors.green,Colors.yellow],),
+         ListObject(text:'Total Recovered : ${obj.totalRecovered}',colorList:[Colors.pink,Colors.orange],),
+         ListObject(text: 'New Confirmed : ${obj.newConfirmed}',colorList: [Colors.deepOrange,Colors.yellow],),
+         ListObject(text: 'New Deaths : ${obj.newDeaths}',colorList:  [Colors.red,Colors.greenAccent],),
+        ListObject(text: 'New Recovered : ${obj.newRecovered}',colorList:  [Colors.red,Colors.cyan],),
 
        ],
      ),
    );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -186,6 +84,19 @@ GlobalModel globalModel;
           try{
           response = await http.get(url);
           Map alpha  = json.decode(response.body);
+          alpha['Countries'].forEach((element) {
+            data.add(Countries(
+                  totalCases: element['TotalConfirmed'],
+                 totalDeaths: element['TotalDeaths'],
+              date: DateTime.now(),
+              totalRecovered: element['TotalRecovered'],
+              newConfirmed: element['NewConfirmed'],
+              newRecovered: element['NewRecovered'],
+              newDeaths: element['NewDeaths'],
+              countryCode: element['CountryCode'],
+            ));
+          });
+
          globalModel = GlobalModel (date: DateTime.now(),
             totalCases: alpha['Global']['TotalConfirmed'],
           totalDeaths: alpha['Global']['TotalDeaths'],

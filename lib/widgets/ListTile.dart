@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ListTile extends StatelessWidget {
+class ListObject extends StatelessWidget {
  final String text;
-  final List colorList ;
-  ListTile({
+  final List <Color>colorList ;
+  ListObject({
     @required this.text,
     @required this.colorList});
 
@@ -17,13 +17,14 @@ class ListTile extends StatelessWidget {
         ),
         boxShadow: [BoxShadow(
           color: Colors.black,
-          blurRadius: 12,
+          blurRadius: 3,
         ),],
       ),
       child: Center(
         child: Text(text,style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
+          color: Colors.black,
         ),textAlign: TextAlign.center,),
       ),
     );
