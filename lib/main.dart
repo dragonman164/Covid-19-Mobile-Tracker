@@ -4,6 +4,7 @@ import 'screens/about.dart';
 import 'screens/graphs.dart';
 import 'screens/tables.dart';
 import 'screens/home.dart';
+import 'screens/countrydetails.dart';
 
 
 void main() {
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         TablesScreen.routeName : (context)=>TablesScreen(),
         GraphsScreen.routeName: (context)=>GraphsScreen(),
         AboutScreen.routeName: (context)=>AboutScreen(),
+        CountryDetails.routeName:(context)=> CountryDetails(),
       },
 
     );

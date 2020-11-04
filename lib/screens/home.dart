@@ -4,7 +4,8 @@ import 'dart:convert';
 import '../widgets/appdrawer.dart';
 import '../models/globalmodel.dart';
 import '../widgets/ListTile.dart';
-import '../models/countries.dart';
+import '../widgets/fetchupdates.dart';
+import '../widgets/ErrorWidget.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = '/home';
@@ -16,35 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
  bool _buttonPressed = false,_dataFetched = false;
 GlobalModel globalModel;
  var response;
-
- Widget welcomeMessage() {
-   return Column(
-     children: [
-       Container(
-        child: Image(image: AssetImage('assets/masks.png'),),
-         padding: EdgeInsets.symmetric(horizontal: 50,vertical: 50),
-       ),
-       Text('Welcome to Covid19 Tracker App',style: TextStyle(
-         fontSize: 26,
-         fontWeight: FontWeight.bold,
-       ),
-       textAlign: TextAlign.center,),
-       SizedBox(height: 50,),
-       Text('Please click on Refresh Button to Fetch latest updates for virus',
-         style: TextStyle(
-           fontSize: 18,
-           fontWeight: FontWeight.w800,
-         ),
-       textAlign: TextAlign.center,),
-     ],
-   );
- }
-
- Widget errorMessage() {
-   return Center(
-     child: Text('Sorry! Latest Data wasn\'t fetched'),
-   );
- }
 
   Widget displayDetails(GlobalModel obj){
    return Padding(
@@ -74,7 +46,7 @@ GlobalModel globalModel;
         title: Text('Covid19 Tracker'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: _buttonPressed?(_dataFetched?displayDetails(globalModel):errorMessage()):welcomeMessage(),
+      body: _buttonPressed?(_dataFetched?displayDetails(globalModel):ErrorBox()):FetchUpdates(),
       floatingActionButton: IconButton(
         highlightColor: Colors.green,
         icon: Icon(Icons.refresh),
@@ -84,18 +56,6 @@ GlobalModel globalModel;
           try{
           response = await http.get(url);
           Map alpha  = json.decode(response.body);
-          alpha['Countries'].forEach((element) {
-            data.add(Countries(
-                  totalCases: element['TotalConfirmed'],
-                 totalDeaths: element['TotalDeaths'],
-              date: DateTime.now(),
-              totalRecovered: element['TotalRecovered'],
-              newConfirmed: element['NewConfirmed'],
-              newRecovered: element['NewRecovered'],
-              newDeaths: element['NewDeaths'],
-              countryCode: element['CountryCode'],
-            ));
-          });
 
          globalModel = GlobalModel (date: DateTime.now(),
             totalCases: alpha['Global']['TotalConfirmed'],

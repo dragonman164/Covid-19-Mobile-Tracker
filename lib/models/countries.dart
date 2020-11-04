@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 class Countries {
   DateTime date;
   int totalCases,totalRecovered,totalDeaths,newConfirmed,newRecovered,newDeaths;
-  String countryCode;
+  String countryCode,countryName;
   Countries({
     @required this.date,
     @required this.totalCases,
@@ -13,6 +13,7 @@ class Countries {
     @required this.newRecovered,
     @required this.newDeaths,
     @required this.countryCode,
+    @required this.countryName,
   });
 
 }

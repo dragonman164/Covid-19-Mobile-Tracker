@@ -3,6 +3,7 @@ import '../screens/about.dart';
 import '../screens/graphs.dart';
 import '../screens/tables.dart';
 import '../screens/home.dart';
+import '../screens/countrydetails.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -47,6 +48,13 @@ class AppDrawer extends StatelessWidget {
             title: Text('Graphs'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(GraphsScreen.routeName);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.nature_people),
+            title: Text('Country wise Details'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(CountryDetails.routeName);
             },
           ),
           ListTile(

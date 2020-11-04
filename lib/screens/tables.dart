@@ -3,6 +3,8 @@ import '../widgets/appdrawer.dart';
 import '../models/countries.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../widgets/ErrorWidget.dart';
+import '../widgets/fetchupdates.dart';
 
 
 class TablesScreen extends StatefulWidget {
@@ -15,7 +17,7 @@ class TablesScreen extends StatefulWidget {
 
 class _TablesScreenState extends State<TablesScreen> {
   bool _buttonPressed = false,_dataFetched = false;
-  List <TableRow> _tableRows;
+  List <TableRow> _tableRows = [];
 
   var response;
   @override
@@ -26,24 +28,14 @@ class _TablesScreenState extends State<TablesScreen> {
         title: Text('Tables'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-            child: Table(
-              border: TableBorder.all(width: 1),
-              children: [
-                TableRow(
-                  children: [
-                    Text('Ehll'),
-                  ]
-                )
-              ]
+      body: _buttonPressed?(_dataFetched?SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+        child: Table(
+            border: TableBorder.all(width: 1),
+            children: _tableRows
 
-            ),
-          )
-        ],
-      ),
+        ),
+      ):ErrorBox()):FetchUpdates(),
       floatingActionButton: IconButton(
         highlightColor: Colors.green,
         icon: Icon(Icons.refresh),
@@ -53,6 +45,8 @@ class _TablesScreenState extends State<TablesScreen> {
           try{
             response = await http.get(url);
             Map alpha  = json.decode(response.body);
+            _tableRows.clear();
+            data.clear();
             alpha['Countries'].forEach((element) {
               data.add(Countries(
                 totalCases: element['TotalConfirmed'],
@@ -63,6 +57,7 @@ class _TablesScreenState extends State<TablesScreen> {
                 newRecovered: element['NewRecovered'],
                 newDeaths: element['NewDeaths'],
                 countryCode: element['CountryCode'],
+                countryName: element['Country'],
               ));
             });
             _dataFetched = true;
@@ -97,6 +92,31 @@ class _TablesScreenState extends State<TablesScreen> {
                 ]
             ),
           );
+          int i = 1;
+          data.forEach((element) {
+            _tableRows.add(
+              TableRow(
+                  children: [
+                    Text('$i',style: TextStyle(
+                      fontSize: 15,
+                    ),textAlign: TextAlign.center),
+                    Text('${element.countryName}',style: TextStyle(
+                      fontSize: 10,
+                    ),textAlign: TextAlign.center),
+                    Text('${element.totalCases}',style: TextStyle(
+                      fontSize: 15,
+                    ),textAlign: TextAlign.center),
+                    Text('${element.totalRecovered}',style: TextStyle(
+                      fontSize: 15,
+                    ),textAlign: TextAlign.center,),
+                    Text('${element.totalDeaths}',style: TextStyle(
+                      fontSize: 15,
+                    ),textAlign: TextAlign.center),
+                  ]
+              ),
+            );
+            i++;
+          });
           setState(() {});
         },
         color: Theme.of(context).primaryColor,
@@ -105,4 +125,3 @@ class _TablesScreenState extends State<TablesScreen> {
     );
   }
 }
-
